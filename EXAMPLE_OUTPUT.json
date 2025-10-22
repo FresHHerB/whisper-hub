@@ -1,0 +1,44 @@
+{
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,
+      "end": 11.0,
+      "text": " And so my fellow Americans ask not what your country can do for you, ask what you can do for your country.",
+      "tokens": [50364, 400, 370, 452, 7177, 6280, 1029, 406, 437, 428, 1941, 393, 360, 337, 291, 11, 1029, 437, 291, 393, 360, 337, 428, 1941, 13, 50914],
+      "temperature": 0.0,
+      "avg_logprob": -0.2341,
+      "compression_ratio": 1.2153846,
+      "no_speech_prob": 0.00035
+    }
+  ],
+  "word_timestamps": [
+    {"word": "And", "start": 0.0, "end": 0.24},
+    {"word": "so", "start": 0.24, "end": 0.46},
+    {"word": "my", "start": 0.46, "end": 0.68},
+    {"word": "fellow", "start": 0.68, "end": 1.06},
+    {"word": "Americans", "start": 1.06, "end": 1.84},
+    {"word": "ask", "start": 2.84, "end": 3.24},
+    {"word": "not", "start": 3.24, "end": 3.64},
+    {"word": "what", "start": 3.64, "end": 3.94},
+    {"word": "your", "start": 3.94, "end": 4.14},
+    {"word": "country", "start": 4.14, "end": 4.54},
+    {"word": "can", "start": 4.54, "end": 4.76},
+    {"word": "do", "start": 4.76, "end": 4.94},
+    {"word": "for", "start": 4.94, "end": 5.14},
+    {"word": "you", "start": 5.14, "end": 5.46},
+    {"word": "ask", "start": 6.24, "end": 6.64},
+    {"word": "what", "start": 6.64, "end": 6.96},
+    {"word": "you", "start": 6.96, "end": 7.16},
+    {"word": "can", "start": 7.16, "end": 7.38},
+    {"word": "do", "start": 7.38, "end": 7.56},
+    {"word": "for", "start": 7.56, "end": 7.78},
+    {"word": "your", "start": 7.78, "end": 7.98},
+    {"word": "country", "start": 7.98, "end": 8.44}
+  ],
+  "detected_language": "en",
+  "transcription": "And so my fellow Americans ask not what your country can do for you, ask what you can do for your country.",
+  "device": "cuda",
+  "model": "base"
+}

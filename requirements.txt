@@ -1,0 +1,10 @@
+# Runtime dependencies for RunPod Serverless Worker
+
+# RunPod SDK for serverless workers
+runpod>=1.7.0
+
+# HTTP requests for audio download
+requests>=2.31.0
+
+# Note: torch, torchaudio, and openai-whisper are installed separately
+# in Dockerfile using CUDA-optimized wheels (~4.6GB)

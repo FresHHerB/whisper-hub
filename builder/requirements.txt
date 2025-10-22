@@ -1,0 +1,6 @@
+# Builder dependencies (used only during Docker build)
+# These are needed to pre-download models
+
+# Note: torch, torchaudio, and openai-whisper are already installed
+# in the previous Dockerfile layer, so we don't need to list them here.
+# This file exists for consistency with builder pattern and future extensions.

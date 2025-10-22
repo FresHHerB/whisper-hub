@@ -1,0 +1,10 @@
+{
+  "input": {
+    "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
+    "model": "base",
+    "language": null,
+    "temperature": 0.0,
+    "beam_size": 5,
+    "word_timestamps": true
+  }
+}
