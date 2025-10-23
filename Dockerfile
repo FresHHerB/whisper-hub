@@ -63,8 +63,7 @@ WORKDIR /app
 
 # Copy builder requirements and install
 COPY builder/requirements.txt /app/builder/requirements.txt
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir -r /app/builder/requirements.txt
+RUN pip install --no-cache-dir -r /app/builder/requirements.txt
 
 # Pre-download Whisper models to reduce cold start
 # This adds ~4-5GB but eliminates runtime downloads (8min → 30s cold start)
@@ -74,8 +73,7 @@ RUN python /app/builder/fetch_models.py && \
 
 # Install runtime dependencies
 COPY requirements.txt /app/requirements.txt
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application source
 COPY src/ /app/src/
