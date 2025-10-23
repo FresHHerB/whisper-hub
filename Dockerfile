@@ -75,8 +75,7 @@ RUN python /app/builder/fetch_models.py && \
 # Install runtime dependencies
 COPY requirements.txt /app/requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir -r requirements.txt && \
-    rm -rf /root/.cache/pip
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy application source
 COPY src/ /app/src/
