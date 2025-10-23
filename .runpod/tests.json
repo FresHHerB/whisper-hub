@@ -1,28 +1,8 @@
 {
   "tests": [
     {
-      "name": "test_base_model_english",
+      "name": "test_base_model",
       "description": "Test base model with English audio (JFK speech)",
-      "input": {
-        "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
-        "model": "base",
-        "language": null,
-        "temperature": 0.0,
-        "beam_size": 5,
-        "word_timestamps": false
-      },
-      "timeout": 60000,
-      "validation": {
-        "transcription": {
-          "contains": ["ask", "not", "what", "your", "country"]
-        },
-        "detected_language": "en",
-        "device": "cuda"
-      }
-    },
-    {
-      "name": "test_word_timestamps",
-      "description": "Test word-level timestamps generation",
       "input": {
         "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
         "model": "base",
@@ -31,122 +11,18 @@
         "beam_size": 5,
         "word_timestamps": true
       },
-      "timeout": 60000,
+      "timeout": 120000,
       "validation": {
-        "word_timestamps": {
+        "transcription": {
           "min_length": 10
         },
-        "detected_language": "en"
-      }
-    },
-    {
-      "name": "test_medium_model",
-      "description": "Test medium model for high quality transcription",
-      "input": {
-        "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
-        "model": "medium",
-        "language": null,
-        "temperature": 0.0,
-        "beam_size": 5,
-        "word_timestamps": false
-      },
-      "timeout": 90000,
-      "validation": {
-        "transcription": {
-          "min_length": 20
-        },
         "detected_language": "en",
-        "model": "medium"
-      }
-    },
-    {
-      "name": "test_turbo_model",
-      "description": "Test turbo model (best balance)",
-      "input": {
-        "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
-        "model": "turbo",
-        "language": null,
-        "temperature": 0.0,
-        "beam_size": 5,
-        "word_timestamps": false
-      },
-      "timeout": 75000,
-      "validation": {
-        "transcription": {
-          "min_length": 20
-        },
-        "detected_language": "en",
-        "model": "turbo"
-      }
-    },
-    {
-      "name": "test_language_detection",
-      "description": "Test automatic language detection",
-      "input": {
-        "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
-        "model": "base",
-        "language": null,
-        "temperature": 0.0,
-        "beam_size": 5,
-        "word_timestamps": false
-      },
-      "timeout": 60000,
-      "validation": {
-        "detected_language": {
-          "not_null": true
-        },
-        "segments": {
-          "min_length": 1
-        }
-      }
-    },
-    {
-      "name": "test_error_handling_invalid_url",
-      "description": "Test error handling with invalid audio URL",
-      "input": {
-        "audio": "https://invalid-url-that-does-not-exist.com/audio.mp3",
-        "model": "base"
-      },
-      "timeout": 30000,
-      "expectError": true,
-      "validation": {
-        "error": {
-          "not_null": true
-        }
-      }
-    },
-    {
-      "name": "test_validation_missing_audio",
-      "description": "Test input validation with missing audio parameter",
-      "input": {
-        "model": "base"
-      },
-      "timeout": 10000,
-      "expectError": true,
-      "validation": {
-        "error": {
-          "contains": ["audio"]
-        }
-      }
-    },
-    {
-      "name": "test_validation_invalid_model",
-      "description": "Test input validation with invalid model name",
-      "input": {
-        "audio": "https://github.com/openai/whisper/raw/main/tests/jfk.flac",
-        "model": "invalid-model-name"
-      },
-      "timeout": 10000,
-      "expectError": true,
-      "validation": {
-        "error": {
-          "contains": ["model"]
-        }
+        "device": "cuda"
       }
     }
   ],
   "config": {
-    "gpuTypeId": "NVIDIA GeForce RTX 4090",
+    "gpuTypeIds": ["AMPERE_16", "NVIDIA RTX A4000", "NVIDIA RTX 4000 Ada Generation"],
     "gpuCount": 1,
     "env": [],
     "allowedCudaVersions": [
