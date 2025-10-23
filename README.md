@@ -1,5 +1,7 @@
 # OpenAI Whisper Official - RunPod Serverless Worker
 
+[![Runpod](https://api.runpod.io/badge/FresHHerB/whisper-hub)](https://console.runpod.io/hub/FresHHerB/whisper-hub)
+
 RunPod serverless worker for audio transcription using **OpenAI Whisper Official** (PyTorch implementation).
 
 ## Features
@@ -155,44 +157,90 @@ GPU: RTX 4090, Model: base
 
 ## Deployment to RunPod Hub
 
-### 1. Create GitHub Repository
+### Prerequisites
+
+Before publishing to RunPod Hub, ensure you have:
+- ✅ GitHub repository with all required files
+- ✅ `.runpod/hub.json` - Hub configuration
+- ✅ `.runpod/tests.json` - Test cases
+- ✅ `Dockerfile` - Container definition
+- ✅ `src/handler.py` - RunPod serverless handler
+- ✅ RunPod Hub badge in README.md
+
+### Step 1: Fork/Clone Repository
 
 ```bash
-# Create repo on GitHub: https://github.com/YOUR_USERNAME/whisper-hub
-# Clone locally
+# Fork this repository on GitHub
+# Or create your own repo and copy files
+
 git clone https://github.com/YOUR_USERNAME/whisper-hub.git
 cd whisper-hub
-
-# Copy all files from this directory
-# git add, commit, push
 ```
 
-### 2. Publish to RunPod Hub
+### Step 2: Connect to RunPod Hub
 
-1. Go to RunPod Console → **Serverless** → **Repos**
-2. Click **Add your repo**
-3. Connect GitHub account
+1. Go to [RunPod Console](https://console.runpod.io) → **Hub** → **My Repos**
+2. Click **Add Repository**
+3. Connect your GitHub account if not already connected
 4. Select your `whisper-hub` repository
-5. Click **Publish**
-6. RunPod will automatically build the Docker image (~10-15 min)
+5. RunPod will validate the configuration files:
+   - `.runpod/hub.json` ✅
+   - `.runpod/tests.json` ✅
+   - `Dockerfile` ✅
 
-### 3. Create Serverless Endpoint
+### Step 3: Create a GitHub Release
+
+**IMPORTANT:** RunPod Hub requires a GitHub release to publish your changes.
+
+```bash
+# Commit your changes
+git add .
+git commit -m "feat: initial RunPod Hub configuration"
+git push origin main
+
+# Create and push a tag
+git tag -a v1.0.0 -m "Release v1.0.0 - Initial RunPod Hub release"
+git push origin v1.0.0
+
+# Or create release via GitHub UI:
+# https://github.com/YOUR_USERNAME/whisper-hub/releases/new
+# - Tag version: v1.0.0
+# - Release title: v1.0.0 - Initial Release
+# - Description: OpenAI Whisper Official worker for RunPod Serverless
+```
+
+### Step 4: Publish to Hub
+
+1. Go to your repo on RunPod Hub
+2. Click **Publish Release**
+3. Select the release tag (e.g., `v1.0.0`)
+4. RunPod will:
+   - Build Docker image (~10-15 min)
+   - Run automated tests from `.runpod/tests.json`
+   - Publish to public hub if tests pass
+
+### Step 5: Deploy Serverless Endpoint
+
+Once published, you can deploy an endpoint:
 
 1. Go to **Serverless** → **Create Endpoint**
 2. **Template Selection:**
-   - Choose **Your Repos** → `whisper-hub`
-3. **Settings:**
+   - Browse Hub → Search "OpenAI Whisper Official"
+   - Or **Your Repos** → `whisper-hub`
+3. **Configuration:**
    - Name: `whisper-official`
-   - Min Workers: `0` (pay per use) or `1` (always ready)
+   - Min Workers: `0` (pay-per-use) or `1` (always ready)
    - Max Workers: `3-5`
-   - GPU Types: `AMPERE_16`, `AMPERE_24`
+   - GPU Types: `AMPERE_16`, `AMPERE_24`, `NVIDIA RTX A4000`
    - Idle Timeout: `30s`
+   - FlashBoot: `Enabled` (recommended)
 4. Click **Deploy**
 5. Copy **Endpoint ID** (e.g., `abc123xyz`)
 
-### 4. Test Endpoint
+### Step 6: Test Your Endpoint
 
 ```bash
+# Test with JFK audio sample
 curl -X POST "https://api.runpod.ai/v2/YOUR_ENDPOINT_ID/run" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -203,7 +251,21 @@ curl -X POST "https://api.runpod.ai/v2/YOUR_ENDPOINT_ID/run" \
       "word_timestamps": true
     }
   }'
+
+# Check status
+curl "https://api.runpod.ai/v2/YOUR_ENDPOINT_ID/status/JOB_ID" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 ```
+
+### Updating Your Hub Listing
+
+To update your hub listing:
+
+1. Make changes to your code/configuration
+2. Commit and push changes
+3. Create a new GitHub release (e.g., `v1.1.0`)
+4. RunPod will automatically detect and build the new release
+5. Users can select which version to deploy
 
 ---
 

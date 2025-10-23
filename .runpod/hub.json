@@ -1,0 +1,122 @@
+{
+  "title": "OpenAI Whisper Official",
+  "description": "GPU-optimized audio transcription using OpenAI Whisper (PyTorch). Pre-cached models (base, medium, turbo) for fast cold starts. Features: word-level timestamps, automatic language detection, CUDA 11.8 + PyTorch 2.1.2 + FP16 optimization.",
+  "type": "serverless",
+  "category": "audio",
+  "iconUrl": "https://raw.githubusercontent.com/openai/whisper/main/approach.png",
+  "config": {
+    "runsOn": "GPU",
+    "containerDiskInGb": 20,
+    "volumeInGb": 0,
+    "gpuTypeIds": [
+      "AMPERE_16",
+      "AMPERE_24",
+      "NVIDIA RTX A4000",
+      "NVIDIA RTX 4000 Ada Generation"
+    ],
+    "minVramGb": 8,
+    "presets": [
+      {
+        "name": "Base Model (Fast)",
+        "description": "Base model (74M params) - Best for general use. Fast inference with good quality.",
+        "defaults": {
+          "MODEL": "base",
+          "TEMPERATURE": "0.0",
+          "BEAM_SIZE": "5"
+        }
+      },
+      {
+        "name": "Medium Model (High Quality)",
+        "description": "Medium model (769M params) - Excellent quality for critical transcriptions.",
+        "defaults": {
+          "MODEL": "medium",
+          "TEMPERATURE": "0.0",
+          "BEAM_SIZE": "5"
+        }
+      },
+      {
+        "name": "Turbo Model (Best Balance)",
+        "description": "Turbo model (809M params) - Best balance between speed and quality.",
+        "defaults": {
+          "MODEL": "turbo",
+          "TEMPERATURE": "0.0",
+          "BEAM_SIZE": "5"
+        }
+      },
+      {
+        "name": "Portuguese with Word Timestamps",
+        "description": "Optimized for Portuguese audio with word-level timestamps for karaoke/highlighting.",
+        "defaults": {
+          "MODEL": "turbo",
+          "LANGUAGE": "pt",
+          "TEMPERATURE": "0.0",
+          "BEAM_SIZE": "5",
+          "WORD_TIMESTAMPS": "true"
+        }
+      }
+    ],
+    "env": [
+      {
+        "key": "MODEL",
+        "input": {
+          "name": "Whisper Model",
+          "type": "select",
+          "description": "Select the Whisper model to use. Pre-cached: base, medium, turbo. Others download on first use.",
+          "default": "base",
+          "options": [
+            { "label": "Base (74M, ~1.5GB VRAM)", "value": "base" },
+            { "label": "Medium (769M, ~5GB VRAM)", "value": "medium" },
+            { "label": "Turbo (809M, ~6GB VRAM)", "value": "turbo" },
+            { "label": "Tiny (39M, ~1GB VRAM)", "value": "tiny" },
+            { "label": "Small (244M, ~2GB VRAM)", "value": "small" },
+            { "label": "Large-v1 (1550M, ~10GB VRAM)", "value": "large-v1" },
+            { "label": "Large-v2 (1550M, ~10GB VRAM)", "value": "large-v2" },
+            { "label": "Large-v3 (1550M, ~10GB VRAM)", "value": "large-v3" }
+          ]
+        }
+      },
+      {
+        "key": "LANGUAGE",
+        "input": {
+          "name": "Language",
+          "type": "string",
+          "description": "Language code (e.g., 'pt', 'en', 'es') or leave empty for automatic detection",
+          "default": ""
+        }
+      },
+      {
+        "key": "TEMPERATURE",
+        "input": {
+          "name": "Temperature",
+          "type": "number",
+          "description": "Sampling temperature (0.0-1.0). Higher = more random. Use 0.0 for deterministic results.",
+          "default": "0.0",
+          "min": 0.0,
+          "max": 1.0,
+          "step": 0.1
+        }
+      },
+      {
+        "key": "BEAM_SIZE",
+        "input": {
+          "name": "Beam Size",
+          "type": "number",
+          "description": "Beam search size (1-10). Higher = slower but more accurate. Default: 5",
+          "default": "5",
+          "min": 1,
+          "max": 10,
+          "step": 1
+        }
+      },
+      {
+        "key": "WORD_TIMESTAMPS",
+        "input": {
+          "name": "Word Timestamps",
+          "type": "boolean",
+          "description": "Enable word-level timestamps for karaoke-style synchronization",
+          "default": false
+        }
+      }
+    ]
+  }
+}
