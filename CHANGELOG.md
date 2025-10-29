@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.0.0] - 2025-01-22
+## [1.0.5] - 2025-01-29
+
+### Fixed
+- **Critical:** Removed `tokens` field from segment output to prevent HTTP 400 Bad Request errors
+- Issue where job completed successfully but RunPod API rejected the output due to payload size exceeding 10MB limit
+- Reduced typical payload size by ~80% (from 15-20MB to 3-4MB for 2-minute audio)
+
+### Changed
+- Segment output no longer includes token IDs (not used by orchestrator)
+- Updated EXAMPLE_OUTPUT.json to reflect new format
+
+### Technical Details
+- RunPod serverless has a 10MB output limit per job
+- For a 2-minute audio with 39 segments, the tokens array could contain 50,000+ elements
+- This resulted in JSON payloads of 15-20MB, causing RunPod to return HTTP 400
+- Worker logs showed "Job completed successfully" but orchestrator received "output is missing"
+
 
 ### Added
 - Initial release of OpenAI Whisper Official worker for RunPod
