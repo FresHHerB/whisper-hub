@@ -188,7 +188,6 @@ class Predictor:
                     "start": seg.get("start", 0.0),
                     "end": seg.get("end", 0.0),
                     "text": seg.get("text", "").strip(),
-                    "tokens": seg.get("tokens", []),
                     "temperature": seg.get("temperature", temperature),
                     "avg_logprob": seg.get("avg_logprob", 0.0),
                     "compression_ratio": seg.get("compression_ratio", 0.0),
